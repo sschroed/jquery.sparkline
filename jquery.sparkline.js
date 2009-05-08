@@ -95,6 +95,8 @@
 *       barWidth - Width of bars in pixels
 *       barSpacing - Gap between bars in pixels
 *       colorMap - Optional mappnig of values to colors to override the *BarColor values above
+*       equalHeights - Set to "yes" to make the 3 bars (positive, negative, and zero) all the same height
+*                      "no" is the default
 *
 *   discrete - Options:
 *       lineHeight - Height of each line in pixels - Defaults to 30% of the graph height
@@ -400,7 +402,8 @@
             posBarColor: '#6f6',
             negBarColor : '#f44',
             zeroBarColor : '#999',
-            colorMap : {}
+            colorMap : {},
+						equalHeights : 'no'
         }, options);
 
         var width = (values.length * options.barWidth) + ((values.length-1) * options.barSpacing);
@@ -409,21 +412,21 @@
         if (target) {
             var canvas_width = target.pixel_width;
             var canvas_height = target.pixel_height;
-            var half_height = Math.round(canvas_height/2);
-
+						var bar_height = options.equalHeights == 'no' ? Math.round(canvas_height/2) : bar_height = Math.round(canvas_height/3);
+					
             for(var i=0; i<values.length; i++) {
                 var x = i*(options.barWidth+options.barSpacing);
                 if (values[i] < 0) {
-                    var y = half_height;
-                    var height = half_height-1;
+										var y = options.equalHeights == 'no' ? (bar_height+1) : ((bar_height*2)-2);
+                    var height = bar_height-1;
                     var color = options.negBarColor;
                 } else if (values[i] > 0) {
                     var y = 0;
-                    var height = half_height-1;
+                    var height = bar_height-1;
                     var color = options.posBarColor;
                 } else {
-                    var y = half_height-1;
-                    var height = 2;
+                    var y = bar_height-1;
+                    var height = options.equalHeights == 'no' ? 2 : (bar_height-1);
                     var color = options.zeroBarColor;
                 }
                 if (options.colorMap[values[i]]) {

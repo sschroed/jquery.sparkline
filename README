@@ -93,6 +93,8 @@ There are 7 types of sparkline, selected by supplying a "type" option of 'line' 
       barWidth - Width of bars in pixels
       barSpacing - Gap between bars in pixels
       colorMap - Optional mappnig of values to colors to override the *BarColor values above
+      equalHeights - Set to "yes" to make the 3 bars (positive, negative, and zero) all the same height
+                     "no" is the default
 
   discrete - Options:
       lineHeight - Height of each line in pixels - Defaults to 30% of the graph height
